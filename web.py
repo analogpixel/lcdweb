@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import time
 from flask import Flask
+from flask import render_template
 
 clk=24
 cs=25

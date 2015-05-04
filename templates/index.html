@@ -1,1 +1,58 @@
-hello
+<head>
+	<script src="/static/jq.js" ></script>
+	<script>
+	var w=8;
+	var h=8;
+
+	var matrix=[
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0]
+	];
+
+	function set(a) {
+		var z = a.id.split(",");
+		console.log(z);
+		var current = matrix[z[1]][z[0]];
+		if (current == 0) { current =1;} else { current=0;}
+		matrix[z[1]][z[0]] = current;
+
+		onload();
+		for (var y=0; y < h; y++) {
+			$.get("/set/" + (y+1) + "/" +  parseInt( matrix[y].join(''),2) );
+		}
+
+	}
+
+  function onload() {
+		var tbl = document.getElementById("matrix");
+
+		var out="<table>";
+
+
+		for (var y=0; y < h; y++) {
+		  out+="<tr>";
+		  for (var x=0; x < w; x++) {
+	    	out+="<td id=" + x + "," + y + " onclick='set(this)'>" + matrix[y][x] + "</td>";
+		  }
+		  out+="</tr>";
+		}
+    out+="</table>";
+
+		tbl.innerHTML = out;
+	}
+
+	</script>
+</head>
+
+<body>
+	<div id="matrix">
+	</div>
+
+	<script>onload();</script>
+</body>
